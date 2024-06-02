@@ -38,7 +38,7 @@ export class ListUsers {
             return res.json({ msg: "Não há usuarios cadastrados" })
         }
 
-        return res.json(usuarios)
+        return res.json({erro: false, data: usuarios})
     }
 }
 
