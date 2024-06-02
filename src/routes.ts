@@ -8,7 +8,7 @@ router.get('/testando', (req: Request, res: Response) => {
     res.json({ msg: "ok" })
 })
 
-
+//Rota de usuários
 router.get('/list-usuarios', new ListUsers().handle)
 router.post('/cad-usuario', new CreateUser().handle)
 router.delete('/delete-usuario/:id', new DeleteUser().handle)
