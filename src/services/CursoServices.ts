@@ -23,10 +23,10 @@ export class CreateCursoService {
             return { erro: true, mensagem: "Já existe um curso cadastrado com este nome" }
         }
 
-       const descricaoValue = descricao || null
+        const descricaoValue = descricao || null
 
         try {
-            
+
             const curso = await prismaClient.cursos.create({
                 data: {
                     nome: nome,
@@ -39,6 +39,23 @@ export class CreateCursoService {
             return { erro: false, mensagem: "Curso cadastrado com sucesso" };
         } catch (error) {
             return { erro: true, mensagem: "Ocorreu um erro ao cadastrar o curso" };
+        }
+    }
+}
+
+export class EditCursoService {
+    async execute(id: number, cursoData: CursoRequest) {
+        try {
+
+            const cursoAtualizado = await prismaClient.cursos.update({
+                where: { id: id },
+                data: cursoData
+            })
+
+            return { erro: false, menssagem: "Curso editado com sucesso" }
+
+        } catch (error) {
+            return { erro: true, menssagem: "Usuário não foi editado com sucesso" }
         }
     }
 }
