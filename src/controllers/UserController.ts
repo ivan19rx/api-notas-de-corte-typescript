@@ -1,4 +1,4 @@
-import { CreateUserService, DeleteUserService, EditUserService } from "../services/UserServices";
+import { CreateUserService, DeleteUserService, EditUserService,  } from "../services/UserServices";
 import { Request, Response } from "express";
 import { UserRequest } from "../models/interfaces/UserRequest";
 import prismaClient from "../prisma";
@@ -39,6 +39,27 @@ export class ListUsers {
         }
 
         return res.json({erro: false, data: usuarios})
+    }
+}
+
+export class GetUserById {
+    async handle(req: Request, res: Response) {
+
+        const id = parseInt(req.params.id)
+        
+        const user = await prismaClient.usuario.findFirst({
+            where: {
+                id: id
+            }
+        })
+
+        if(!user) {
+            return res.json({erro: true, msg: "falha ao buscar usuário"})
+        }
+
+        return res.json(user)
+
+        
     }
 }
 

@@ -43,6 +43,8 @@ export class CreateUserService {
     }
 }
 
+
+
 export class DeleteUserService {
     async execute(id: number) {
         try {
@@ -76,14 +78,14 @@ export class EditUserService {
         try {
 
             const usuarioAtualizado = await prismaClient.usuario.update({
-                where: {id: id},
+                where: { id: id },
                 data: userData
             })
 
-            return {erro: false, menssagem: "Usuário editado com sucesso"}
+            return { erro: false, menssagem: "Usuário editado com sucesso" }
 
-        }catch (error){
-            return {erro: true, menssagem: "Usuário não foi editado com sucesso"}
+        } catch (error) {
+            return { erro: true, menssagem: "Usuário não foi editado com sucesso" }
         }
     }
 }
