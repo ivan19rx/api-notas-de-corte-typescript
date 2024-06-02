@@ -1,6 +1,6 @@
 import prismaClient from '../prisma'
 import { UserRequest } from '../models/interfaces/UserRequest'
-import { json } from 'express'
+
 
 export class CreateUserService {
     async execute({ nome, email, senha, nivelacesso }: UserRequest) {
@@ -44,12 +44,12 @@ export class CreateUserService {
 }
 
 export class DeleteUserService {
-    async execute(userId: number) {
+    async execute(id: number) {
         try {
             // Verifica se o usuário existe
             const user = await prismaClient.usuario.findUnique({
                 where: {
-                    id: userId
+                    id: id
                 }
             });
 
@@ -60,13 +60,30 @@ export class DeleteUserService {
             // Deleta o usuário
             await prismaClient.usuario.delete({
                 where: {
-                    id: userId
+                    id: id
                 }
             });
 
             return { erro: false, mensagem: "Usuário excluído com sucesso" };
         } catch (error) {
             return { erro: true, mensagem: "Ocorreu um erro ao excluir o usuário" };
+        }
+    }
+}
+
+export class EditUserService {
+    async execute(id: number, userData: UserRequest) {
+        try {
+
+            const usuarioAtualizado = await prismaClient.usuario.update({
+                where: {id: id},
+                data: userData
+            })
+
+            return {erro: false, menssagem: "Usuário editado com sucesso"}
+
+        }catch (error){
+            return {erro: true, menssagem: "Usuário não foi editado com sucesso"}
         }
     }
 }

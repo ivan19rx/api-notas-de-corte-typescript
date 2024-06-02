@@ -1,4 +1,4 @@
-import { CreateUserService, DeleteUserService } from "../services/UserServices";
+import { CreateUserService, DeleteUserService, EditUserService } from "../services/UserServices";
 import { Request, Response } from "express";
 import { UserRequest } from "../models/interfaces/UserRequest";
 import prismaClient from "../prisma";
@@ -22,18 +22,34 @@ export class CreateUser {
 export class DeleteUser {
     async handle(req: Request, res: Response) {
         const id = parseInt(req.params.id)
-        
+
         const deleteUserService = new DeleteUserService
         const deleteUser = await deleteUserService.execute(id)
 
         return res.json(deleteUser)
-    } 
+    }
 }
 
 export class ListUsers {
     async handle(req: Request, res: Response) {
         const usuarios = await prismaClient.usuario.findMany()
 
+        if (usuarios.length === 0) {
+            return res.json({ msg: "Não há usuarios cadastrados" })
+        }
+
         return res.json(usuarios)
+    }
+}
+
+export class EditUser {
+    async handle(req: Request, res: Response) {
+        const id = parseInt(req.params.id)
+        const data = req.body
+
+        const editUserService = new EditUserService
+        const userEdit = await editUserService.execute(id, data)
+
+        return res.json(userEdit)
     }
 }
