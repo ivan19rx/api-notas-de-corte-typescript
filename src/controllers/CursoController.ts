@@ -5,6 +5,40 @@ import { CreateCursoService, EditCursoService } from "../services/CursoServices"
 
 import { Request, Response } from "express";
 
+export class ListCursos {
+    async handle(req: Request, res: Response) {
+        const cursos = await prismaClient.cursos.findMany()
+
+        if (cursos.length === 0) {
+            return res.json({ msg: "Não há cursos cadastrados" })
+        }
+
+        return res.json({ erro: false, data: cursos })
+    }
+}
+
+export class GetCursoById {
+    async handle(req: Request, res: Response) {
+
+        const id = parseInt(req.params.id)
+
+        const curso = await prismaClient.cursos.findFirst({
+            where: {
+                id: id
+            }
+        })
+
+        if (!curso) {
+            return res.json({ erro: true, msg: "falha ao buscar curso" })
+        }
+
+        return res.json(curso)
+
+
+    }
+}
+
+
 export class CreateCurso {
     async handle(req: Request, res: Response) {
         const { nome, faculdade, notaDeCorte, descricao }: CursoRequest = req.body

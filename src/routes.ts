@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 
 import { CreateUser, DeleteUser, ListUsers, EditUser, GetUserById } from "./controllers/UserController";
-import { CreateCurso, EditCurso } from "./controllers/CursoController";
+import { CreateCurso, EditCurso, ListCursos, GetCursoById } from "./controllers/CursoController";
 
 const router = Router()
 
@@ -17,6 +17,8 @@ router.delete('/delete-usuario/:id', new DeleteUser().handle)
 router.put('/edit-usuario/:id', new EditUser().handle)
 
 //rota de cursos
+router.get('/list-cursos', new ListCursos().handle)
+router.get('/get-curso/:id', new GetCursoById().handle)
 router.post('/cad-curso', new CreateCurso().handle)
 router.delete('/delete-curso/:id')
 router.put('/edit-curso/:id', new EditCurso().handle)
