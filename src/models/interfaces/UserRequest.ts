@@ -2,5 +2,5 @@ export interface UserRequest {
     nome: string,
     email: string,
     senha: string,
-    nivelacesso: string
+    nivelacesso: string 
 }
