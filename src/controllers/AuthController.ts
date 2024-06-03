@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import { LoginService } from "../services/AuthServices";
-import { LoginRequest } from "../models/interfaces/LoginRequest";
+import { LoginService } from "../services/AuthService";
+import { LoginRequest } from "../models/interfaces/AuthRequests";
+import { UserRequest } from "../models/interfaces/UserRequest";
+import { CreateUserService } from "../services/UserServices";
 
 export class Login {
     async handle(req: Request, res: Response) {
@@ -15,3 +17,16 @@ export class Login {
 
     }
 }
+
+export class Register {
+    async handle(req: Request, res: Response) {
+        const { nome, email, senha, nivelacesso }: UserRequest = req.body
+        const createUserService = new CreateUserService
+        const user = await createUserService.execute({
+            nome, email, senha, nivelacesso
+        })
+
+        return res.json(user)
+    }
+}
+
