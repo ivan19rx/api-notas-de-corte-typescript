@@ -9,6 +9,11 @@ router.get('/testando', (req: Request, res: Response) => {
     res.json({ msg: "ok" })
 })
 
+
+//rotas de autenticação
+
+
+
 //Rota de usuários
 router.get('/list-usuarios', new ListUsers().handle)
 router.get('/get-usuario/:id', new GetUserById().handle)
