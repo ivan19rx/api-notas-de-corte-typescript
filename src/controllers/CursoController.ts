@@ -9,10 +9,11 @@ export class ListCursos {
         const cursos = await prismaClient.cursos.findMany()
 
         if (cursos.length === 0) {
-            return res.json({ msg: "Não há cursos cadastrados" })
+            return res.json({ erro: true, data: [] })
         }
+       
 
-        return res.json({ erro: false, data: cursos })
+        return res.json({ erro: false, data : cursos })
     }
 }
 
