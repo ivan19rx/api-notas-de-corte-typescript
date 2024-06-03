@@ -49,12 +49,12 @@ export class EditCursoService {
     async execute(id: number, cursoData: CursoRequest) {
         try {
 
-            const cursoAtualizado = await prismaClient.cursos.update({
+            const usuarioAtualizado = await prismaClient.cursos.update({
                 where: { id: id },
                 data: cursoData
             })
 
-            return { erro: false, menssagem: "Curso editado com sucesso" }
+            return { erro: false, menssagem: "Usuário editado com sucesso" }
 
         } catch (error) {
             return { erro: true, menssagem: "Usuário não foi editado com sucesso" }
