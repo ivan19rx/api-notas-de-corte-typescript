@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import { Login } from "./controllers/AuthController";
 
 import { CreateUser, DeleteUser, ListUsers, EditUser, GetUserById } from "./controllers/UserController";
 import { CreateCurso, EditCurso, ListCursos, GetCursoById } from "./controllers/CursoController";
@@ -11,6 +12,8 @@ router.get('/testando', (req: Request, res: Response) => {
 
 
 //rotas de autenticação
+router.post('/login', new Login().handle)
+router.post('/register')
 
 
 

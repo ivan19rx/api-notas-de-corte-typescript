@@ -1,18 +1,17 @@
 import prismaClient from '../prisma'
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, response,  } from 'express';
 import { LoginRequest } from '../models/interfaces/LoginRequest'
 import jwt from 'jsonwebtoken'
 require('dotenv').config()
 
 export class LoginService {
-    async execute( req: Request, res: Response, next: NextFunction) {
-        const {email, senha} = req.body
+    async execute({email, senha}: LoginRequest) {
         
         if (!email || !senha) {
-            return res.status(400).json({
+            return {
                 erro: true,
                 msg: "Erro: Todos os campos devem ser preenchidos!"
-            })
+            }
         }
 
         const usuario = await prismaClient.usuario.findFirst({
@@ -22,17 +21,17 @@ export class LoginService {
         })
 
         if (!usuario) {
-            return res.status(400).json({
+            return{
                 erro: true,
                 msg: "Erro: Email ou senha incorretos"
-            });
+            }
         }
 
-        if (req.body.senha != usuario.senha) {
-            return res.status(400).json({
+        if (senha != usuario.senha) {
+            return {
                 erro: true,
                 msg: "Erro: Email ou senha incorretos"
-            })
+            }
         }
 
         try {
@@ -48,14 +47,14 @@ export class LoginService {
                 nivelacesso: usuario.nivelacesso
             }
 
-            return res.status(200).json({ msg: "autenticado com sucesso", token, user })
+            return { msg: "autenticado com sucesso", token, user }
 
         } catch (error) {
             console.log(error)
 
-            return res.status(500).json({
+            return {
                 msg: "ocorreu um erro no servidor"
-            })
+            }
         }
 
     }
