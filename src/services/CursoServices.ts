@@ -59,3 +59,31 @@ export class EditCursoService {
         }
     }
 }
+
+export class DeleteCursoService {
+    async execute(id: number) {
+        try {
+            // Verifica se o usuário existe
+            const curso = await prismaClient.cursos.findUnique({
+                where: {
+                    id: id
+                }
+            });
+
+            if (!curso) {
+                return { erro: true, mensagem: "Curso não encontrado" };
+            }
+
+            // Deleta o usuário
+            await prismaClient.cursos.delete({
+                where: {
+                    id: id
+                }
+            });
+
+            return { erro: false, mensagem: "Curso excluído com sucesso" };
+        } catch (error) {
+            return { erro: true, mensagem: "Ocorreu um erro ao excluir o curso" };
+        }
+    }
+}

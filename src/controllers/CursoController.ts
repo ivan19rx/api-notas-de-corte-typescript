@@ -1,6 +1,6 @@
 import prismaClient from "../prisma";
 import { CursoRequest } from "../models/interfaces/CursoRequest";
-import { CreateCursoService, EditCursoService } from "../services/CursoServices";
+import { CreateCursoService, EditCursoService, DeleteCursoService } from "../services/CursoServices";
 
 import { Request, Response } from "express";
 
@@ -13,6 +13,17 @@ export class ListCursos {
         }
 
         return res.json({ erro: false, data: cursos })
+    }
+}
+
+export class DeleteCurso {
+    async handle(req: Request, res: Response) {
+        const id = parseInt(req.params.id)
+
+        const deleteCursoService = new DeleteCursoService
+        const deleteCurso = await deleteCursoService.execute(id)
+
+        return res.json(deleteCurso)
     }
 }
 

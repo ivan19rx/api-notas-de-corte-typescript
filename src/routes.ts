@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { Login, Register } from "./controllers/AuthController";
 
 import { CreateUser, DeleteUser, ListUsers, EditUser, GetUserById } from "./controllers/UserController";
-import { CreateCurso, EditCurso, ListCursos, GetCursoById } from "./controllers/CursoController";
+import { CreateCurso, EditCurso, ListCursos, GetCursoById,  DeleteCurso} from "./controllers/CursoController";
 
 const router = Router()
 
@@ -28,7 +28,7 @@ router.put('/edit-usuario/:id', new EditUser().handle)
 router.get('/list-cursos', new ListCursos().handle)
 router.get('/get-curso/:id', new GetCursoById().handle)
 router.post('/cad-curso', new CreateCurso().handle)
-router.delete('/delete-curso/:id')
+router.delete('/delete-curso/:id', new DeleteCurso().handle)
 router.put('/edit-curso/:id', new EditCurso().handle)
 
 
