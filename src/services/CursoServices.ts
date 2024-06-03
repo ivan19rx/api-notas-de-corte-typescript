@@ -2,7 +2,7 @@ import prismaClient from '../prisma'
 import { CursoRequest } from '../models/interfaces/CursoRequest'
 
 export class CreateCursoService {
-    async execute({ nome, faculdade, notaDeCorte, descricao }: CursoRequest) {
+    async execute({ nome, faculdade, notaDeCorte, descricao}: CursoRequest) {
         if (!nome) {
             return { erro: true, mensagem: "Digite o nome do curso" }
         }
@@ -23,22 +23,24 @@ export class CreateCursoService {
             return { erro: true, mensagem: "Já existe um curso cadastrado com este nome" }
         }
 
-        const descricaoValue = descricao || null
+        let descricaoValue = null || descricao
 
         try {
+
+            
 
             const curso = await prismaClient.cursos.create({
                 data: {
                     nome: nome,
                     faculdade: faculdade,
                     notaDeCorte: notaDeCorte,
-                    descricao: descricaoValue
+                    descricao: descricaoValue 
                 }
             });
 
             return { erro: false, mensagem: "Curso cadastrado com sucesso" };
         } catch (error) {
-            return { erro: true, mensagem: "Ocorreu um erro ao cadastrar o curso" };
+            return { erro: true, mensagem: error };
         }
     }
 }

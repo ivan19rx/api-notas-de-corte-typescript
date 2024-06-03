@@ -26,5 +26,5 @@ model Cursos {
   nome String
   faculdade String
   notaDeCorte Float
-  descricao String @db.Text
+  descricao String? @db.Text
 }

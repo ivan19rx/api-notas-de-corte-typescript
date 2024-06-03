@@ -64,7 +64,7 @@ export class CreateCurso {
 export class EditCurso {
     async handle(req: Request, res: Response) {
         const id = parseInt(req.params.id)
-        const data = req.body
+        const data: CursoRequest = req.body
 
         const editCursoService = new EditCursoService
         const userEdit = await editCursoService.execute(id, data)
