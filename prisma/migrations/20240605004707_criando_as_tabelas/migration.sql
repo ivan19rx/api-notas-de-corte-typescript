@@ -15,7 +15,7 @@ CREATE TABLE `Cursos` (
     `nome` VARCHAR(191) NOT NULL,
     `faculdade` VARCHAR(191) NOT NULL,
     `notaDeCorte` DOUBLE NOT NULL,
-    `descricao` TEXT NOT NULL,
+    `descricao` TEXT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
