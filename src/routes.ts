@@ -27,9 +27,9 @@ router.delete('/delete-usuario/:id', CheckToken, new DeleteUser().handle)
 router.put('/edit-usuario/:id', CheckToken, new EditUser().handle)
 
 //rota de cursos
-router.get('/list-cursos', CheckToken, new ListCursos().handle)
+router.get('/list-cursos', new ListCursos().handle)
 router.get('/get-curso/:id', CheckToken, new GetCursoById().handle)
-router.post('/cad-curso', CheckToken, new CreateCurso().handle)
+router.post('/cad-curso', new CreateCurso().handle)
 router.delete('/delete-curso/:id', CheckToken, new DeleteCurso().handle)
 router.put('/edit-curso/:id', CheckToken, new EditCurso().handle)
 

@@ -6,14 +6,45 @@ import { Request, Response } from "express";
 
 export class ListCursos {
     async handle(req: Request, res: Response) {
-        const cursos = await prismaClient.cursos.findMany()
+        const { nome, faculdade } = req.query;
+        let cursos;
 
-        if (cursos.length === 0) {
-            return res.json({ erro: true, data: [] })
+        try {
+            if (nome && faculdade) {
+                cursos = await prismaClient.cursos.findMany({
+                    where: {
+                        nome: {
+                            contains: nome.toString(), // Filtrar por nome
+                        },
+                        faculdade: {
+                            equals: faculdade.toString(), // Filtrar por faculdade
+                        },
+                    },
+                });
+            } else if (nome) {
+                cursos = await prismaClient.cursos.findMany({
+                    where: {
+                        nome: {
+                            contains: nome.toString(), // Filtrar por nome
+                        },
+                    },
+                });
+            } else if (faculdade) {
+                cursos = await prismaClient.cursos.findMany({
+                    where: {
+                        faculdade: {
+                            contains: faculdade.toString(), // Filtrar por faculdade
+                        },
+                    },
+                });
+            } else {
+                cursos = await prismaClient.cursos.findMany(); // Sem filtros
+            }
+
+            return res.json({ erro: false, data: cursos });
+        } catch (error) {
+            return res.status(500).json({ erro: true, mensagem: 'Erro ao buscar cursos.' });
         }
-       
-
-        return res.json({ erro: false, data : cursos })
     }
 }
 
