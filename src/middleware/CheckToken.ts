@@ -9,16 +9,11 @@ export function CheckToken(req: Request, res: Response, next: NextFunction) {
     if (!token) {
         return res.status(401).json({ msg: "acesso negado" })
     }
-
+    
     try {
-
         const secret: string = process.env.SECRET || '';
-
         jwt.verify(token, secret)
-
         next()
-
-
     } catch (error) {
         res.status(400).json({ msg: "token invalido" })
     }

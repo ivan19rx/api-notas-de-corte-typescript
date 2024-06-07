@@ -17,7 +17,7 @@ export class ListCursos {
                             contains: nome.toString(), // Filtrar por nome
                         },
                         faculdade: {
-                            equals: faculdade.toString(), // Filtrar por faculdade
+                            contains: faculdade.toString(), // Filtrar por faculdade
                         },
                     },
                 });
@@ -74,7 +74,7 @@ export class GetCursoById {
             return res.json({ erro: true, msg: "falha ao buscar curso" })
         }
 
-        return res.json(curso)
+        return res.json({id: curso.id, nome: curso.nome, faculdade: curso.faculdade, notaDeCorte: curso.notaDeCorte, descricao: curso.descricao})
 
 
     }

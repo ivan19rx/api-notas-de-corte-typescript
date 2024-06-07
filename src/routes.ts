@@ -20,18 +20,18 @@ router.post('/register', new Register().handle)
 
 
 //Rota de usuários
-router.get('/list-usuarios', CheckToken, new ListUsers().handle)
-router.get('/get-usuario/:id', CheckToken, new GetUserById().handle)
-router.post('/cad-usuario', CheckToken, new CreateUser().handle)
-router.delete('/delete-usuario/:id', CheckToken, new DeleteUser().handle)
-router.put('/edit-usuario/:id', CheckToken, new EditUser().handle)
+router.get('/list-usuarios', new ListUsers().handle)
+router.get('/get-usuario/:id', new GetUserById().handle)
+router.post('/cad-usuario', new CreateUser().handle)
+router.delete('/delete-usuario/:id', new DeleteUser().handle)
+router.put('/edit-usuario/:id', new EditUser().handle)
 
 //rota de cursos
 router.get('/list-cursos', new ListCursos().handle)
-router.get('/get-curso/:id', CheckToken, new GetCursoById().handle)
+router.get('/get-curso/:id', new GetCursoById().handle)
 router.post('/cad-curso', new CreateCurso().handle)
-router.delete('/delete-curso/:id', CheckToken, new DeleteCurso().handle)
-router.put('/edit-curso/:id', CheckToken, new EditCurso().handle)
+router.delete('/delete-curso/:id', new DeleteCurso().handle)
+router.put('/edit-curso/:id', new EditCurso().handle)
 
 
 export {router}
