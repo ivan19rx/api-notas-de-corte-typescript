@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { LoginService } from "../services/AuthService";
-import { LoginRequest } from "../models/interfaces/AuthRequests";
-import { UserRequest } from "../models/interfaces/UserRequest";
-import { CreateUserService } from "../services/UserServices";
+import { LoginService } from "../../services/AuthService";
+import { LoginRequest } from "../../models/interfaces/AuthRequests";
+import { UserRequest } from "../../models/interfaces/UserRequest";
+import { CreateUserService } from "../../services/UserServices";
 
 export class Login {
     async handle(req: Request, res: Response) {

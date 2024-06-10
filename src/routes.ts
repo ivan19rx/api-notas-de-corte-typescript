@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import { Login, Register } from "./controllers/AuthController";
+import { Login, Register } from "./controllers/AuthController/AuthController";
 
-import { CreateUser, DeleteUser, ListUsers, EditUser, GetUserById } from "./controllers/UserController";
-import { CreateCurso, EditCurso, ListCursos, GetCursoById,  DeleteCurso} from "./controllers/CursoController";
+import { CreateUser, DeleteUser, ListUsers, EditUser, GetUserById } from "./controllers/UserController/UserController";
+import { CreateCurso, EditCurso, ListCursos, GetCursoById,  DeleteCurso} from "./controllers/CursoController/CursoController";
 
 import { CheckToken } from "./middleware/CheckToken";
 
