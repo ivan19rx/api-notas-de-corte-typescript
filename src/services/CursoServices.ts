@@ -2,7 +2,7 @@ import prismaClient from '../prisma'
 import { CursoRequest } from '../models/interfaces/CursoRequest'
 
 export class CreateCursoService {
-    async execute({ nome, faculdade, notaDeCorte, descricao}: CursoRequest) {
+    async execute({ nome, faculdade, notaDeCorte, ano, descricao}: CursoRequest) {
         if (!nome) {
             return { erro: true, mensagem: "Digite o nome do curso" }
         }
@@ -34,6 +34,7 @@ export class CreateCursoService {
                     nome: nome,
                     faculdade: faculdade,
                     notaDeCorte: notaDeCorte,
+                    ano: ano,
                     descricao: descricaoValue 
                 }
             });

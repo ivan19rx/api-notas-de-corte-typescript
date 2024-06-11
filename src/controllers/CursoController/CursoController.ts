@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 
 export class ListCursos {
     async handle(req: Request, res: Response) {
-        const { nome, faculdade } = req.query;
+        const { nome, faculdade, ano } = req.query;
         let cursos;
 
         try {
@@ -35,6 +35,12 @@ export class ListCursos {
                         faculdade: {
                             contains: faculdade.toString(), // Filtrar por faculdade
                         },
+                    },
+                });
+            } else if (typeof ano === 'string') {
+                cursos = await prismaClient.cursos.findMany({
+                    where: {
+                        ano: parseInt(ano), // Filtrar por ano
                     },
                 });
             } else {
@@ -83,10 +89,10 @@ export class GetCursoById {
 
 export class CreateCurso {
     async handle(req: Request, res: Response) {
-        const { nome, faculdade, notaDeCorte, descricao }: CursoRequest = req.body
+        const { nome, faculdade, notaDeCorte, ano, descricao }: CursoRequest = req.body
         const createCursoService = new CreateCursoService
         const curso = await createCursoService.execute({
-            nome, faculdade, notaDeCorte, descricao
+            nome, faculdade, notaDeCorte,ano, descricao
         })
 
         return res.json(curso)

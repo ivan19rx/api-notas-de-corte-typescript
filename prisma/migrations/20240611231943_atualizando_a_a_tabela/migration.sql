@@ -15,6 +15,7 @@ CREATE TABLE `Cursos` (
     `nome` VARCHAR(191) NOT NULL,
     `faculdade` VARCHAR(191) NOT NULL,
     `notaDeCorte` DOUBLE NOT NULL,
+    `ano` DOUBLE NOT NULL,
     `descricao` TEXT NULL,
 
     PRIMARY KEY (`id`)
