@@ -1,6 +1,6 @@
-import prismaClient from "../prisma";
-import { CursoRequest } from "../models/interfaces/CursoRequest";
-import { CreateCursoService, EditCursoService, DeleteCursoService } from "../services/CursoServices";
+import prismaClient from "../../prisma";
+import { CursoRequest } from "../../models/interfaces/CursoRequest";
+import { CreateCursoService, EditCursoService, DeleteCursoService } from "../../services/CursoServices";
 
 import { Request, Response } from "express";
 

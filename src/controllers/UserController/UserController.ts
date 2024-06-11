@@ -1,7 +1,7 @@
-import { CreateUserService, DeleteUserService, EditUserService,  } from "../services/UserServices";
+import { CreateUserService, DeleteUserService, EditUserService,  } from "../../services/UserServices";
 import { Request, Response } from "express";
-import { UserRequest } from "../models/interfaces/UserRequest";
-import prismaClient from "../prisma";
+import { UserRequest } from "../../models/interfaces/UserRequest";
+import prismaClient from "../../prisma";
 
 
 
