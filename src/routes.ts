@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { Login, Register } from "./controllers/AuthController/AuthController";
 
 import { CreateUser, DeleteUser, ListUsers, EditUser, GetUserById } from "./controllers/UserController/UserController";
-import { CreateCurso, EditCurso, ListCursos, GetCursoById,  DeleteCurso} from "./controllers/CursoController/CursoController";
+import { CreateCurso, EditCurso, ListCursos, GetCursoById,  DeleteCurso, GetFaculdades} from "./controllers/CursoController/CursoController";
 
 import { CheckToken } from "./middleware/CheckToken";
 
@@ -29,6 +29,7 @@ router.put('/edit-usuario/:id', new EditUser().handle)
 //rota de cursos
 router.get('/list-cursos', new ListCursos().handle)
 router.get('/get-curso/:id', new GetCursoById().handle)
+router.get('/faculdades', new GetFaculdades().handle)
 router.post('/cad-curso', new CreateCurso().handle)
 router.delete('/delete-curso/:id', new DeleteCurso().handle)
 router.put('/edit-curso/:id', new EditCurso().handle)

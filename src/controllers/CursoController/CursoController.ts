@@ -10,7 +10,7 @@ export class ListCursos {
         let cursos;
 
         try {
-            if (nome && faculdade) {
+            if (nome && faculdade && typeof ano === 'string') {
                 cursos = await prismaClient.cursos.findMany({
                     where: {
                         nome: {
@@ -19,6 +19,11 @@ export class ListCursos {
                         faculdade: {
                             contains: faculdade.toString(), // Filtrar por faculdade
                         },
+                        ano: {
+                            equals: parseInt(ano)
+                        }
+                        
+                        
                     },
                 });
             } else if (nome) {
@@ -83,6 +88,24 @@ export class GetCursoById {
         return res.json({id: curso.id, nome: curso.nome, faculdade: curso.faculdade, notaDeCorte: curso.notaDeCorte, descricao: curso.descricao})
 
 
+    }
+}
+
+export class GetFaculdades {
+    async handle(req: Request, res: Response) {
+        
+
+        try {
+            
+                const faculdades = await prismaClient.cursos.findMany({
+                    distinct: ['faculdade'],
+                    select: {faculdade: true}
+                })
+
+            return res.json({ erro: false, data: faculdades });
+        } catch (error) {
+            return res.status(400).json({ erro: true, mensagem: 'Erro ao buscar faculdades.' });
+        }
     }
 }
 
