@@ -9,7 +9,6 @@ export class ListCursos {
         const { nome, faculdade, ano } = req.query;
 
         try {
-            // Crie o objeto de cláusula "where" dinamicamente com os filtros fornecidos
             const whereClause: any = {};
             if (nome) {
                 whereClause['nome'] = {
@@ -27,15 +26,14 @@ export class ListCursos {
                 };
             }
 
-            // Consulte o banco de dados com a cláusula "where" construída
             const cursos = await prismaClient.cursos.findMany({
                 where: whereClause,
             });
 
-            // Retorne os cursos encontrados na resposta JSON
+           
             return res.json({ erro: false, data: cursos });
         } catch (error) {
-            // Lide com qualquer erro que possa ocorrer durante a consulta
+            
             return res.status(500).json({ erro: true, mensagem: 'Erro ao buscar cursos.' });
         }
     }
@@ -89,6 +87,24 @@ export class GetFaculdades {
             return res.json({ erro: false, data: faculdades });
         } catch (error) {
             return res.status(400).json({ erro: true, mensagem: 'Erro ao buscar faculdades.' });
+        }
+    }
+}
+
+export class GetCursoNames {
+    async handle(req: Request, res: Response) {
+        
+
+        try {
+            
+                const cursosNames = await prismaClient.cursos.findMany({
+                    distinct: ['nome'],
+                    select: {nome: true}
+                })
+
+            return res.json({ erro: false, data: cursosNames });
+        } catch (error) {
+            return res.status(400).json({ erro: true, mensagem: 'Erro ao buscar o nome dos cursos.' });
         }
     }
 }
