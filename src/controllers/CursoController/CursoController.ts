@@ -7,57 +7,41 @@ import { Request, Response } from "express";
 export class ListCursos {
     async handle(req: Request, res: Response) {
         const { nome, faculdade, ano } = req.query;
-        let cursos;
 
         try {
-            if (nome && faculdade && typeof ano === 'string') {
-                cursos = await prismaClient.cursos.findMany({
-                    where: {
-                        nome: {
-                            contains: nome.toString(), // Filtrar por nome
-                        },
-                        faculdade: {
-                            contains: faculdade.toString(), // Filtrar por faculdade
-                        },
-                        ano: {
-                            equals: parseInt(ano)
-                        }
-                        
-                        
-                    },
-                });
-            } else if (nome) {
-                cursos = await prismaClient.cursos.findMany({
-                    where: {
-                        nome: {
-                            contains: nome.toString(), // Filtrar por nome
-                        },
-                    },
-                });
-            } else if (faculdade) {
-                cursos = await prismaClient.cursos.findMany({
-                    where: {
-                        faculdade: {
-                            contains: faculdade.toString(), // Filtrar por faculdade
-                        },
-                    },
-                });
-            } else if (typeof ano === 'string') {
-                cursos = await prismaClient.cursos.findMany({
-                    where: {
-                        ano: parseInt(ano), // Filtrar por ano
-                    },
-                });
-            } else {
-                cursos = await prismaClient.cursos.findMany(); // Sem filtros
+            // Crie o objeto de cláusula "where" dinamicamente com os filtros fornecidos
+            const whereClause: any = {};
+            if (nome) {
+                whereClause['nome'] = {
+                    contains: nome.toString(),
+                };
+            }
+            if (faculdade) {
+                whereClause['faculdade'] = {
+                    contains: faculdade.toString(),
+                };
+            }
+            if (ano) {
+                whereClause['ano'] = {
+                    equals: parseInt(ano.toString()),
+                };
             }
 
+            // Consulte o banco de dados com a cláusula "where" construída
+            const cursos = await prismaClient.cursos.findMany({
+                where: whereClause,
+            });
+
+            // Retorne os cursos encontrados na resposta JSON
             return res.json({ erro: false, data: cursos });
         } catch (error) {
+            // Lide com qualquer erro que possa ocorrer durante a consulta
             return res.status(500).json({ erro: true, mensagem: 'Erro ao buscar cursos.' });
         }
     }
 }
+
+
 
 export class DeleteCurso {
     async handle(req: Request, res: Response) {
