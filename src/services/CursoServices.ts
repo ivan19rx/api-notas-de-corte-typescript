@@ -1,47 +1,51 @@
 import prismaClient from '../prisma'
 import { CursoRequest } from '../models/interfaces/CursoRequest'
 
+interface ExecuteResponse {
+    erro: boolean;
+    mensagem: string;
+}
+
 export class CreateCursoService {
-    async execute({ nome, faculdade, notaDeCorte, ano, descricao}: CursoRequest) {
+    async execute({ nome, faculdade, notaDeCorte, ano, descricao }: CursoRequest) {
         if (!nome) {
-            return { erro: true, mensagem: "Digite o nome do curso" }
+            return { erro: true, mensagem: "Digite o nome do curso" };
         }
         if (!faculdade) {
-            return { erro: true, mensagem: "Digite a faculdade" }
+            return { erro: true, mensagem: "Digite a faculdade" };
         }
         if (!notaDeCorte) {
-            return { erro: true, mensagem: "Digite a nota de corte" }
+            return { erro: true, mensagem: "Digite a nota de corte" };
         }
 
         const cursoExists = await prismaClient.cursos.findFirst({
             where: {
-                nome: nome
+                nome: nome,
+                faculdade: faculdade,
+                ano: ano
             }
-        })
+        });
 
         if (cursoExists) {
-            return { erro: true, mensagem: "Já existe um curso cadastrado com este nome" }
+            return { erro: true, mensagem: "Já existe um curso cadastrado com este nome na mesma faculdade e ano" };
         }
 
-        let descricaoValue = null || descricao
+        let descricaoValue = descricao || null;
 
         try {
-
-            
-
             const curso = await prismaClient.cursos.create({
                 data: {
                     nome: nome,
                     faculdade: faculdade,
                     notaDeCorte: notaDeCorte,
                     ano: ano,
-                    descricao: descricaoValue 
+                    descricao: descricaoValue
                 }
             });
 
             return { erro: false, mensagem: "Curso cadastrado com sucesso" };
-        } catch (error) {
-            return { erro: true, mensagem: error };
+        } catch (erro) {
+            return { erro: true, mensagem: "ocorreu algum erro no servidor" };
         }
     }
 }
