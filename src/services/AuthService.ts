@@ -43,6 +43,7 @@ export class LoginService {
             }, secret)
 
             const user = {
+                id: usuario.id,
                 nome: usuario.nome,
                 nivelacesso: usuario.nivelacesso
             }
