@@ -1,5 +1,4 @@
 import prismaClient from '../prisma'
-import express, { Request, Response, response,  } from 'express';
 import { LoginRequest } from '../models/interfaces/AuthRequests'
 import jwt from 'jsonwebtoken'
 require('dotenv').config()
